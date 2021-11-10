@@ -167,12 +167,18 @@ function onKeyDown(event) {
     circle.fillColor = keyInfo[event.key].color;
     keyInfo[event.key].sound.play()
     circles.push(circle);
+    console.log(circles);
   }
 }
 function onFrame(event) {
   for (var i = 0; i < circles.length; i++) {
     circles[i].fillColor.hue += 2;
     circles[i].scale(.9);
+    if(circles[i].area < 1){
+      circles[i].remove(); // remove the circle from the canvas
+      circles.splice(i, 1); // remove the circle from the array
+      console.log(circles);
+    }
   }
 }
 function randomNum(min, max) {
