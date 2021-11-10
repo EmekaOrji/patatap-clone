@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Circles</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/1.1.28/howler.min.js"></script>
+  <script src="paper-full.js"></script>
+  <script type="text/paperscript" canvas="myCanvas">
+    var soundA = new Howl({
+      urls: ['media/bubbles.mp3']
+    });
+    var soundS = new Howl({
+      urls: ['media/confetti.mp3']
+    });
+    var soundD = new Howl({
+      urls: ['media/corona.mp3']
+    });
+
+    
+    var circles = [];
+    function randomNum(min, max) {
+      return Math.floor(Math.random() * (max - min)) + min; // You can remove the Math.floor if you don't want it to be an integer
+    }
+    function onKeyDown(event) {
+      sound.play();
+      var r = randomNum(10, 600);
+      var red = Math.floor(Math.random() * 256);
+      var green = Math.floor(Math.random() * 256);
+      var blue = Math.floor(Math.random() * 256);
+      var randomColor = "rgb(" + red + ", " + green + ", " + blue + ")";
+      var maxPoint = new Point(view.size.width, view.size.height);
+      var point = Point.random() * maxPoint;
+      var circle = new Path.Circle(point, r);
+      circle.fillColor = randomColor;
+      circles.push(circle);
+      console.log(circles);
+    }
+    function onFrame(event) {
+      for (var i = 0; i < circles.length; i++) {
+        circles[i].fillColor.hue += 2;
+        circles[i].scale(.9);
+      }
+    }
+  </script>
+</head>
+<body>
+  <canvas id="myCanvas" resize></canvas>
+</body>
+</html>
